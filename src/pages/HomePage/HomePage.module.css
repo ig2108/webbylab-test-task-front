@@ -1,0 +1,39 @@
+.sortButtonWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.searchbarWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchbarTitle {
+  display: block;
+  width: 200px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.filmListTitle {
+  display: block;
+  margin-bottom: 30px;
+  font-family: inherit;
+  font-size: 32px;
+  line-height: 36px;
+  font-style: normal;
+  font-weight: 500;
+}

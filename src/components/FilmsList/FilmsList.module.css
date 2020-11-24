@@ -1,0 +1,42 @@
+.filmsList {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  text-align: ;
+  width: 1150px;
+  /* margin-left: 20px; */
+}
+
+.filmsListItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 550px;
+  min-height: 60px;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.filmsListItem:hover,
+.filmsListItem:focus {
+  background-color: rgb(209, 209, 209);
+}
+
+.filmListItem__Link {
+  padding: 10px 10px 10px 0;
+  text-decoration: none;
+  color: #000;
+}
+
+.filmsListItemTitle {
+  display: block;
+  margin-left: 20px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}

@@ -1,0 +1,23 @@
+.filmInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.filmName {
+  margin-bottom: 20px;
+}
+
+.chapterTitle {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.chapterInfo {
+  display: block;
+  max-width: 600px;
+  margin-bottom: 20px;
+  text-align: left;
+}

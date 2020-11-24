@@ -1,0 +1,17 @@
+.btnWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 350px;
+  margin-left: 20px;
+}
+
+.filmSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  margin-bottom: 30px;
+}
