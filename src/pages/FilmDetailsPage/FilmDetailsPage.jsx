@@ -3,16 +3,11 @@ import React, { Component } from 'react';
 import * as filmsApi from '../../services/filmsApi';
 import getIdFromProps from '../../heplers/getIdFromProps';
 
-import Button from '../../components/Button/Button'
+import Button from '../../components/Button/Button';
 import AboutFilm from '../../components/AboutFilm/AboutFilm';
 
 import styles from './FilmDetailsPage.module.css';
 import buttonStyles from '../../components/Button/Button.module.css';
-
-// const queryString = require('query-string');
-// const getQueryFromSearchInput = location => {
-//   return queryString.parse(location.state.from.search).query;
-// };
 
 export default class FilmDetailsPage extends Component {
   state = {
@@ -21,7 +16,6 @@ export default class FilmDetailsPage extends Component {
 
   componentDidMount() {
     const id = getIdFromProps(this.props);
-    // const { location } = this.props;
 
     filmsApi
       .getFilmWithId(id)
@@ -48,8 +42,6 @@ export default class FilmDetailsPage extends Component {
 
   render() {
     const { film } = this.state;
-    // const { match } = this.props;
-
     return (
       <>
         {film && (

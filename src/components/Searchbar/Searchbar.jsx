@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import styles from './Searchbar.module.css';
 
@@ -36,7 +36,6 @@ export default class Searchbar extends Component {
           <button type="submit" className={styles.SearchFormButton}>
             <span className={styles.SearchFormButtonLabel}>Search</span>
           </button>
-
           <input
             className={styles.SearchFormInput}
             type="text"
@@ -52,7 +51,11 @@ export default class Searchbar extends Component {
   };
 };
 
-// Searchbar.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-//   placeholderInput
-// };
+Searchbar.defaultProps = {
+  placeholderInput: 'Search'
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  placeholderInput: PropTypes.string,
+};

@@ -77,7 +77,6 @@ export default class HomePage extends Component {
 
   handleDelete = (e) => {
     e.preventDefault();
-
     const id = e.target.dataset.id;
 
     filmsApi

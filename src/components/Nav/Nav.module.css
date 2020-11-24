@@ -51,8 +51,11 @@
 .navItem__Link:focus,
 .navItem__Link:hover {
   color: rgb(71, 79, 192);
+  background-color: rgb(255, 255, 255);
 }
 
 .activeLink {
   font-weight: bold;
+  color: rgb(71, 79, 192);
+  background-color: rgb(255, 255, 255);
 }

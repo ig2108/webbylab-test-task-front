@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import Nav from '../Nav/Nav';
 import Loader from '../Loader/Loader';
 
@@ -33,7 +33,7 @@ const App = () => {
             <Route path="/" exact component={HomePage} />
             <Route path="/films/:filmId" component={FilmDetailsPage} />
             <Route path="/films" component={AddFilmPage} />
-            {/* <Route component={NotFoundPage} /> */}
+            <Route component={NotFoundPage} />
           </Switch>
         </Suspense>
       </div>

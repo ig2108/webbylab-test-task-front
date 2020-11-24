@@ -68,3 +68,27 @@
 .backToFilmListButton:focus {
   background-color: #292828;
 }
+
+.addFilmFormButton {
+  display: block;
+  margin: 0 auto;
+  min-width: 150px;
+  max-width: 200px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #fff;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgb(71, 79, 192);
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.addFilmFormButton:hover,
+.addFilmFormButton:focus {
+  background-color: #20177a;
+}

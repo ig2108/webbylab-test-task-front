@@ -1,71 +1,128 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import shortid from 'shortid';
 
-// import filmsMapper from '../../heplers/filmsMapper';
 import * as filmsApi from '../../services/filmsApi';
-import FilmsList from '../../components/FilmsList/FilmsList';
-import Searchbar from '../../components/Searchbar/Searchbar';
+import Button from '../../components/Button/Button';
 
-// import styles from './MoviesPage.module.css';
-
-// const queryString = require('query-string');
-// const getQSFromLocation = location => {
-//   return queryString.parse(location.search).query;
-// };
+import styles from './AddFilmPage.module.css';
+import buttonStyles from '../../components/Button/Button.module.css';
 
 export default class AddFilmPage extends Component {
   state = {
-    searchedFilms: [],
-    searchInput: '',
+    title: '',
+    releaseYear: '',
+    format: 'DVD',
+    stars: '',
+    filmToAdd: null,
   };
 
-  componentDidMount() {
-    // const { location } = this.props;
-    // const parsedQueryString = getQSFromLocation(location);
-    // if (parsedQueryString) {
-    //   this.getSearchFilms(parsedQueryString);
-    // }
+  titleInputId = shortid.generate();
+  releaseYearInputId = shortid.generate();
+  starsInputId = shortid.generate();
+  formatInputId = shortid.generate();
+
+  addNewFilmInDb = (film) => {
+    filmsApi
+    .addNewFilm(film)
+    .catch(err => console.log(err));
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    const { searchInput } = this.state;
-    const { history, location } = this.props;
-
-    if (prevState.searchInput !== searchInput) {
-      this.getSearchFilms(searchInput);
-      history.push({
-        ...location,
-        search: `query=${searchInput}`,
-      });
+  componentDidUpdate() {
+    if (this.state.filmToAdd !== null) {
+      this.addNewFilmInDb(this.state.filmToAdd);
+      this.resetState();
     };
   };
 
-  // getSearchFilms = queryString => {
-  //   filmsApi
-  //     .getFilmsByQuery(queryString)
-  //     .then(({ data }) => {
-  //       data.results.length === 0
-  //         ? alert("Don't find films with this titles")
-  //         : this.setState({
-  //             searchedFilms: filmsMapper(data.results),
-  //           });
-  //     })
-  //     .catch(err => console.log(err));
-  // };
-
-  handleSubmit = queryInput => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const {title, releaseYear, format, stars} = this.state;
+    const formatStars = stars.split(', ');
     this.setState({
-      searchInput: queryInput,
+      filmToAdd: {
+        title,
+        releaseYear,
+        format,
+        stars: formatStars,
+      },
+    });
+  };
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    if (name === "releaseYear" && value < 0) {
+      e.target.value = 0;
+      return;
+    }
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  resetState = () => {
+    this.setState({
+      title: '',
+      releaseYear: '',
+      format: 'DVD',
+      stars: '',
+      filmToAdd: null,
     });
   };
 
   render() {
-    const { searchedFilms } = this.state;
+    const { title, releaseYear, format, stars } = this.state;
     return (
-      <>
-        <Searchbar onSubmit={this.handleSubmit} />
-        {searchedFilms.length > 0 && <FilmsList films={searchedFilms} />}
-      </>
+      <form className={styles.addFilmForm} onSubmit={this.handleSubmit}>
+        <label className={styles.labelItem} htmlFor={this.titleInputId}>
+          <p className={styles.textOfLabelTitle}>Film title</p>
+          <input
+            className={styles.inputName}
+            type="text"
+            name="title"
+            value={title}
+            onChange={this.handleChange}
+            id={this.titleInputId}
+          />
+        </label>
+        <label className={styles.labelItem} htmlFor={this.releaseYearInputId}>
+          <p className={styles.textOfLabelTitle}>Release year</p>
+          <input
+            className={styles.inputName}
+            type="number"
+            name="releaseYear"
+            value={releaseYear}
+            onChange={this.handleChange}
+            id={this.releaseYearInputId}
+          />
+        </label>
+        <label className={styles.labelItem} htmlFor={this.starsInputId}>
+          <p className={styles.textOfLabelTitle}>Actors (separate by commas and space)</p>
+          <input
+            className={styles.inputName}
+            type="text"
+            name="stars"
+            value={stars}
+            onChange={this.handleChange}
+            id={this.starsInputId}
+          />
+        </label>
+        <label className={styles.labelItem} htmlFor={this.formatInputId}>
+          <p className={styles.textOfLabelTitle}>Format</p>
+          <select
+            className={styles.inputName}
+            name="format"
+            value={format}
+            onChange={this.handleChange}
+            id={this.formatInputId}
+          >
+            <option value={"DVD"}>DVD</option>
+            <option value={"VHS"}>VHS</option>
+            <option value={"Blu-Ray"}>Blu-Ray</option>
+          </select>
+
+        </label>
+        <Button nameOfClass={buttonStyles.addFilmFormButton} typeOfButton={'submit'} holderText={'Add film'}  />
+      </form>
     );
   };
 };

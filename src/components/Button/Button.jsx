@@ -18,7 +18,7 @@ const Button = ({onClickFunc, holderText = "Button", nameOfClass, typeOfButton =
 };
 
 Button.propTypes = {
-  onClickFunc: PropTypes.func.isRequired,
+  onClickFunc: PropTypes.func,
   holderText: PropTypes.string,
   typeOfButton: PropTypes.string,
   nameOfClass: PropTypes.string,

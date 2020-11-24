@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Button from '../Button/Button';
 
@@ -22,15 +22,18 @@ const FilmsList = ({ films = [], location, onDeleteFunc }) => {
   );
 };
 
-// FilmsList.propTypes = {
-//   films: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       name: PropTypes.string,
-//       title: PropTypes.string,
-//     }),
-//   ).isRequired,
-//   location: PropTypes.object.isRequired,
-// };
+FilmsList.propTypes = {
+  films: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      format: PropTypes.string.isRequired,
+      releaseYear: PropTypes.number.isRequired,
+      stars: PropTypes.array.isRequired,
+      title: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  location: PropTypes.object.isRequired,
+  onDeleteFunc: PropTypes.func.isRequired,
+};
 
 export default withRouter(FilmsList);
