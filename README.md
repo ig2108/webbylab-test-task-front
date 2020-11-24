@@ -11,3 +11,5 @@ Frontend part of webbyLab test task
 # https://webbylab-test-task.netlify.app/
 
 Ссылка на объяснение архитектуры:
+
+# https://github.com/ig2108/webbylab-test-task-front/blob/main/explanation%20of%20architecture.txt
