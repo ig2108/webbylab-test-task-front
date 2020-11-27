@@ -40,7 +40,7 @@ export default class AddFilmPage extends Component {
 
     if (this.state.filmToAdd === null) {
       this.setFilmsFromDbToState();
-    }
+    };
   };
 
   // HANDLE-EVENT METHODS ============================
@@ -48,10 +48,11 @@ export default class AddFilmPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const {title, releaseYear, format, stars} = this.state;
-    if (title === '', releaseYear === '', stars === '') {
+    if (title === '' || releaseYear === '' || stars === '') {
       NotificationManager.error('Please, fill empty inputs!', 'Some of inputs are empty...', 5000);
       return;
-    }
+    };
+
     const formatStars = stars.split(', ');
 
     const isValid = this.validateForm(title, + releaseYear, formatStars);
@@ -76,7 +77,7 @@ export default class AddFilmPage extends Component {
       e.target.value = 0;
       NotificationManager.error('Please, enter a year from 1850 to 2020', 'Release year can not be less, then 0!', 5000);
       return;
-    }
+    };
     this.setState({
       [name]: value,
     });
@@ -139,7 +140,7 @@ export default class AddFilmPage extends Component {
     .catch(err => console.log(err));
   };
 
-  setFilmsFromDbToState () {
+  setFilmsFromDbToState = () => {
     filmsApi
     .getAllFilms()
     .then(({ data }) => {
@@ -173,10 +174,6 @@ export default class AddFilmPage extends Component {
   findFilmsByActors = (actorsArray, filmsArray) => {
     let matchedFilms = [];
     actorsArray.find(actor => {
-      if (matchedFilms.length > 0) {
-        return;
-      };
-
       return filmsArray.find(film => {
         if (film.stars.includes(actor)) {
           matchedFilms.push(film);

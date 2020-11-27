@@ -8,19 +8,25 @@ import * as filmsApi from '../../services/filmsApi';
 import Button from '../../components/Button/Button';
 import FilmsList from '../../components/FilmsList/FilmsList';
 import Searchbar from '../../components/Searchbar/Searchbar';
+import ModalDelete from '../../components/ModalDelete/ModalDelete';
 
 import styles from './HomePage.module.css';
 import buttonStyles from '../../components/Button/Button.module.css';
 
 const filterFilmsByTitle = (films, filter) => {
   return films.filter(film =>
-    film.title.toLowerCase().includes(filter.toLowerCase()),
+    film.title.toLowerCase().includes(filter.toLowerCase())
   );
 };
+
 const filterFilmsByActor = (films, filter) => {
-  return films.filter(film =>
-    film.stars.map(star => star.toLowerCase()).includes(filter.toLowerCase())
-  );
+  let filteredFilmsBySearch = [];
+  films.map(film => {
+    if (film.stars.join().toLowerCase().includes(filter.toLowerCase())) {
+      filteredFilmsBySearch.push(film);
+    };
+  });
+  return filteredFilmsBySearch;
 };
 
 export default class HomePage extends Component {
@@ -29,6 +35,8 @@ export default class HomePage extends Component {
     sortByTitle: false,
     filterTitle: '',
     filterActor: '',
+    isModalDeleteOpen: false,
+    idToDelete: null,
   };
 
   // LIFECYCLE METHODS ============================
@@ -53,10 +61,16 @@ export default class HomePage extends Component {
 
   // HANDLE-EVENT METHODS ============================
 
-  handleDelete = (e) => {
+  handleOpenModalDelete = (e) => {
     e.preventDefault();
+    this.toggleModalDelete();
     const id = e.target.dataset.id;
+    this.setState({
+      idToDelete: id,
+    });
+  };
 
+  handleDelete = (id) => {
     filmsApi
     .deleteFilm(id)
     .then(({data}) => {
@@ -67,6 +81,7 @@ export default class HomePage extends Component {
         this.setFilmsToState(data);
       };
       NotificationManager.success('Your film successfully deleted!', 'Deleted!', 5000);
+      this.toggleModalDelete();
     })
     .catch(err => console.log(err));
   };
@@ -126,14 +141,21 @@ export default class HomePage extends Component {
     });
   };
 
-  sortFilms(films) {
-    return films.sort((a, b) => (a.title > b.title) ? 1 : -1);
+  sortFilms = (films) => {
+    return films.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? 1 : -1);
+  };
+
+  toggleModalDelete = () => {
+    const {isModalDeleteOpen} = this.state;
+    this.setState ({
+      isModalDeleteOpen: !isModalDeleteOpen,
+    });
   };
 
   // RENDER ============================
 
   render() {
-    const { films, filterTitle, filterActor } = this.state;
+    const { films, filterTitle, filterActor, isModalDeleteOpen, idToDelete } = this.state;
     let filteredFilms;
     if (filterTitle) {
       filteredFilms = filterFilmsByTitle(films, filterTitle);
@@ -155,8 +177,10 @@ export default class HomePage extends Component {
           <Searchbar onSubmit={this.handleSubmitSearchActor} placeholderInput={'Please, type actor'} />
         </div>
         <h2 className={styles.filmListTitle}>Films</h2>
-        <FilmsList films={filteredFilms} onDeleteFunc={this.handleDelete} />
+        {filteredFilms.length === 0 && (filterTitle !== '' || filterActor !== '') && <h3>No movies found with the specified search parameters!</h3>}
+        <FilmsList films={filteredFilms} onDeleteFunc={this.handleOpenModalDelete} />
         <NotificationContainer/>
+        {isModalDeleteOpen && <ModalDelete filmId={idToDelete} handleCloseModal={this.toggleModalDelete} onClickDeleteFilm={this.handleDelete}/>}
       </div>
     );
   };

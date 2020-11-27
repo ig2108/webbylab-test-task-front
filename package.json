@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "body-scroll-lock": "^3.1.5",
     "classnames": "^2.2.6",
     "gh-pages": "^2.2.0",
     "indicative": "^7.4.4",
