@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 import * as filmsApi from '../../services/filmsApi';
 
 import Button from '../../components/Button/Button';
@@ -28,6 +31,8 @@ export default class HomePage extends Component {
     filterActor: '',
   };
 
+  // LIFECYCLE METHODS ============================
+
   componentDidMount() {
       this.setFilmsFromDbToState();
       this.setState({
@@ -46,34 +51,7 @@ export default class HomePage extends Component {
     };
   };
 
-  setFilmsFromDbToState () {
-    filmsApi
-    .getAllFilms()
-    .then(({ data }) => {
-      this.setFilmsToState(data);
-    })
-    .catch(err => console.log(err));
-  };
-
-  setSortedFilmsFromDbToState () {
-    filmsApi
-    .getAllFilms()
-    .then(({ data }) => {
-      this.sortFilms(data);
-      this.setFilmsToState(data);
-    })
-    .catch(err => console.log(err));
-  };
-
-  setFilmsToState = (films) => {
-    this.setState({
-      films,
-    });
-  };
-
-  sortFilms(films) {
-    return films.sort((a, b) => (a.title > b.title) ? 1 : -1);
-  };
+  // HANDLE-EVENT METHODS ============================
 
   handleDelete = (e) => {
     e.preventDefault();
@@ -88,6 +66,7 @@ export default class HomePage extends Component {
         this.sortFilms(data);
         this.setFilmsToState(data);
       };
+      NotificationManager.success('Your film successfully deleted!', 'Deleted!', 5000);
     })
     .catch(err => console.log(err));
   };
@@ -118,6 +97,41 @@ export default class HomePage extends Component {
     });
   };
 
+  // API METHODS ============================
+
+  setFilmsFromDbToState () {
+    filmsApi
+    .getAllFilms()
+    .then(({ data }) => {
+      this.setFilmsToState(data);
+    })
+    .catch(err => console.log(err));
+  };
+
+  setSortedFilmsFromDbToState () {
+    filmsApi
+    .getAllFilms()
+    .then(({ data }) => {
+      this.sortFilms(data);
+      this.setFilmsToState(data);
+    })
+    .catch(err => console.log(err));
+  };
+
+  // HELP METHODS ============================
+
+  setFilmsToState = (films) => {
+    this.setState({
+      films,
+    });
+  };
+
+  sortFilms(films) {
+    return films.sort((a, b) => (a.title > b.title) ? 1 : -1);
+  };
+
+  // RENDER ============================
+
   render() {
     const { films, filterTitle, filterActor } = this.state;
     let filteredFilms;
@@ -142,6 +156,7 @@ export default class HomePage extends Component {
         </div>
         <h2 className={styles.filmListTitle}>Films</h2>
         <FilmsList films={filteredFilms} onDeleteFunc={this.handleDelete} />
+        <NotificationContainer/>
       </div>
     );
   };

@@ -14,18 +14,22 @@ export default class FilmDetailsPage extends Component {
     film: null,
   };
 
+  // LIFECYCLE METHODS ============================
+
   componentDidMount() {
     const id = getIdFromProps(this.props);
 
     filmsApi
-      .getFilmWithId(id)
-      .then(({ data }) =>
-        this.setState({
-          film: { ...data },
-        }),
-      )
-      .catch(err => console.log(err));
+    .getFilmWithId(id)
+    .then(({ data }) =>
+      this.setState({
+        film: { ...data },
+      }),
+    )
+    .catch(err => console.log(err));
   };
+
+  // HANDLE-EVENT METHODS ============================
 
   handleGoBack = () => {
     const { history } = this.props;
@@ -39,6 +43,8 @@ export default class FilmDetailsPage extends Component {
     .deleteFilm(film._id)
     .then(this.handleGoBack);
   };
+
+  // RENDER ============================
 
   render() {
     const { film } = this.state;
