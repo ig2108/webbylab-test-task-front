@@ -17,6 +17,7 @@ export default class AddFilmPage extends Component {
     stars: '',
     filmToAdd: null,
     filmsList: null,
+    uploadStatus: false,
   };
 
   // GENERATE INPUTS ID ============================
@@ -25,6 +26,7 @@ export default class AddFilmPage extends Component {
   releaseYearInputId = shortid.generate();
   starsInputId = shortid.generate();
   formatInputId = shortid.generate();
+  uploadFileInputId = shortid.generate();
 
   // LIFECYCLE METHODS ============================
 
@@ -82,6 +84,21 @@ export default class AddFilmPage extends Component {
       [name]: value,
     });
   };
+
+  handleUploadImage(e) {
+    e.preventDefault();
+    const file = (e.target.files[0]);
+
+    const data = new FormData();
+    data.append('file', file);
+
+    filmsApi
+    .uploadFileFilms(data)
+    .then(response=> {
+      NotificationManager.success(response.data, "File was uploaded!", 5000);
+    })
+    .catch(err => NotificationManager.error(err.response.data, "Upload file failed!", 5000));
+  }
 
   // VALIDATION METHODS ============================
 
@@ -260,6 +277,18 @@ export default class AddFilmPage extends Component {
           </label>
           <Button nameOfClass={buttonStyles.addFilmFormButton} typeOfButton={'submit'} holderText={'Add film'}  />
           <NotificationContainer/>
+        </form>
+        <form className={styles.uploadForm}>
+          <label className={styles.uploadForm__Label} htmlFor={this.uploadFileInputId}>
+            <h3 className={styles.uploadForm__Label_title}>Upload file from your Device to load films (only .txt)</h3>
+            <input className={styles.uploadForm__Label_input}
+              type="file"
+              accept="text/plain,text/txt"
+              id={this.uploadFileInputId}
+              multiple
+              onChange={this.handleUploadImage}
+            ></input>
+          </label>
         </form>
       </>
     )

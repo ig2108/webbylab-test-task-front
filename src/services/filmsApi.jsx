@@ -8,4 +8,6 @@ export const getFilmWithId = id => axios.get(BASE_URL + `${id}`);
 
 export const addNewFilm = film => axios.post(BASE_URL, film);
 
+export const uploadFileFilms = file => axios.post(BASE_URL + "upload", file);
+
 export const deleteFilm = id => axios.delete(BASE_URL + `${id}`);
