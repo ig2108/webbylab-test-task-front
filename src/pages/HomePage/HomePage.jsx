@@ -142,7 +142,38 @@ export default class HomePage extends Component {
   };
 
   sortFilms = (films) => {
-    return films.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? 1 : -1);
+    return films.sort((a, b) => {
+      if (a.title.toLowerCase() > b.title.toLowerCase() ) {
+        if(a.title[0] === b.title[0]) {
+          if(this.isStartedFromCapitalLetter(a.title) && !this.isStartedFromCapitalLetter(b.title)) {
+            return 1;
+          } else if(!this.isStartedFromCapitalLetter(a.title) && this.isStartedFromCapitalLetter(b.title)) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else {
+          return 1;
+        }
+      } else if (a.title.toLowerCase() < b.title.toLowerCase()) {
+        if(a.title[0] === b.title[0]) {
+          if(this.isStartedFromCapitalLetter(a.title) && !this.isStartedFromCapitalLetter(b.title)) {
+            return -1;
+          } else if(!this.isStartedFromCapitalLetter(a.title) && this.isStartedFromCapitalLetter(b.title)) {
+            return 1;
+          } else {
+            return -1;
+          };
+        } else {
+          return -1;
+        };
+      };
+    });
+
+  };
+
+  isStartedFromCapitalLetter (string) {
+    return (string[0] === string[0].toUpperCase()) ? true : false;
   };
 
   toggleModalDelete = () => {
