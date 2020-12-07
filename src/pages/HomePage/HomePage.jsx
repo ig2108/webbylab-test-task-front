@@ -142,34 +142,11 @@ export default class HomePage extends Component {
   };
 
   sortFilms = (films) => {
-    return films.sort((a, b) => {
-      if (a.title.toLowerCase() > b.title.toLowerCase() ) {
-        if(a.title[0] === b.title[0]) {
-          if(this.isStartedFromCapitalLetter(a.title) && !this.isStartedFromCapitalLetter(b.title)) {
-            return 1;
-          } else if(!this.isStartedFromCapitalLetter(a.title) && this.isStartedFromCapitalLetter(b.title)) {
-            return -1;
-          } else {
-            return 1;
-          }
-        } else {
-          return 1;
-        }
-      } else if (a.title.toLowerCase() < b.title.toLowerCase()) {
-        if(a.title[0] === b.title[0]) {
-          if(this.isStartedFromCapitalLetter(a.title) && !this.isStartedFromCapitalLetter(b.title)) {
-            return -1;
-          } else if(!this.isStartedFromCapitalLetter(a.title) && this.isStartedFromCapitalLetter(b.title)) {
-            return 1;
-          } else {
-            return -1;
-          };
-        } else {
-          return -1;
-        };
-      };
-    });
+    let collator = new Intl.Collator(["en-US", "uk-UA"], {caseFirst: "upper"});
 
+    return films.sort((a, b) => {
+      return collator.compare(a.title, b.title)
+    });
   };
 
   isStartedFromCapitalLetter (string) {

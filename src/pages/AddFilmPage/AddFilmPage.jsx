@@ -138,11 +138,11 @@ export default class AddFilmPage extends Component {
     let isFilmDuplicated;
 
     if (filteredByTitleFilms.length > 0) {
-      isFilmDuplicated = this.isFilmDuplicateByYearOrActors(filteredByTitleFilms, releaseYear, stars);
+      isFilmDuplicated = this.isFilmDuplicateByYearAndActors(filteredByTitleFilms, releaseYear, stars);
     };
 
     if (isFilmDuplicated) {
-      NotificationManager.error('Film with similar title and release year/actors already has added .Please, enter other release year/actors data', 'Duplicate Films!', 5000);
+      NotificationManager.error('Film with similar title and release year/actors already has added. Please, enter other release year/actors data', 'Duplicate Films!', 5000);
       return false;
     } else {
       return true;
@@ -174,11 +174,11 @@ export default class AddFilmPage extends Component {
     });
   };
 
-  isFilmDuplicateByYearOrActors = (filmsArray, year, actorsArray) => {
+  isFilmDuplicateByYearAndActors = (filmsArray, year, actorsArray) => {
     const matchedFilmObjByReleaseYear = this.findFilmByReleaseYear(year, filmsArray);
     const matchedFilmsByActors = this.findFilmsByActors(actorsArray, filmsArray);
 
-    if ( matchedFilmObjByReleaseYear || matchedFilmsByActors.length > 0) {
+    if ( matchedFilmObjByReleaseYear && matchedFilmsByActors.length > 0) {
       return true;
     };
     return false;
